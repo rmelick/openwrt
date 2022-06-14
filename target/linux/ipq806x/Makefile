@@ -8,7 +8,7 @@ BOARDNAME:=Qualcomm Atheros IPQ806X
 FEATURES:=squashfs nand fpu ramdisk
 CPU_TYPE:=cortex-a15
 CPU_SUBTYPE:=neon-vfpv4
-SUBTARGETS:=generic
+SUBTARGETS:=generic chromium
 
 KERNEL_PATCHVER:=5.10
 KERNEL_TESTING_PATCHVER:=5.15

@@ -42,6 +42,13 @@ platform_do_upgrade() {
 		fi
 		nand_do_upgrade "$1"
 		;;
+	google,whirlwind-openwrt)
+		export_bootdevice
+		export_partdevice CI_ROOTDEV 0
+		CI_KERNPART="kernel"
+		CI_ROOTPART="rootfs"
+		emmc_do_upgrade "$1"
+		;;
 	linksys,ea7500-v1 |\
 	linksys,ea8500)
 		platform_do_upgrade_linksys "$1"
@@ -68,4 +75,14 @@ platform_do_upgrade() {
 		default_do_upgrade "$1"
 		;;
 	esac
+}
+
+
+platform_copy_config() {
+	case "$(board_name)" in
+	google,whirlwind-openwrt)
+		emmc_copy_config
+		;;
+	esac
+	return 0;
 }
