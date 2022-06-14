@@ -1,5 +1,8 @@
-#include "qcom-ipq8064-v2.0.dtsi"
+/* #include "qcom-ipq8064-v2.0.dtsi" */
+#include "qcom-ipq8064-v1.0.dtsi"
 
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/soc/qcom,tcsr.h>
 
 /*
 This is my version of the tweaked dts file for the Tplink Onhub, I started from
@@ -9,6 +12,7 @@ https://chromium.googlesource.com/chromiumos/third_party/kernel/+/chromeos-3.14/
 Summary of changes made
  * change #include to use the v2.0 that's part of this openwrt
  * add new string to 'compatible'
+ * add include of dt-bindings that were found in other files using qcom-usb-ctrl-select, switch back to v1 for main include
 
 TODOs?
  * should the model name and compatible name be more like TP-LINK OnHub TGR1900?
