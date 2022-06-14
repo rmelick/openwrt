@@ -28,7 +28,7 @@ Signed-off-by: John Crispin <john@phrozen.org>
 +	qcom-ipq8064-r7500v2.dtb \
 +	qcom-ipq8064-unifi-ac-hd.dtb \
 +	qcom-ipq8064-wg2600hp.dtb \
-+	qcom-ipq8064-whirlwind-openwrt.dtb \
++	qcom-ipq8064-onhub.dtb \
 +	qcom-ipq8064-wpq864.dtb \
 +	qcom-ipq8064-wxr-2533dhp.dtb \
 +	qcom-ipq8065-nbg6817.dtb \

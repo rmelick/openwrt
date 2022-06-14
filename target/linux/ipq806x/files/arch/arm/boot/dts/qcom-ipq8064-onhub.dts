@@ -16,7 +16,7 @@ TODOs?
 
 / {
 	model = "Qualcomm IPQ8064/AP148";
-	compatible = "google,whirlwind-openwrt", "google,whirlwind-sp5", "qcom,ipq8064";
+	compatible = "tplink,onhub", "google,whirlwind-sp5", "qcom,ipq8064";
 	reserved-memory {
 		#address-cells = <1>;
 		#size-cells = <1>;

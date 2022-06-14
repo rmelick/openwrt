@@ -42,7 +42,7 @@ platform_do_upgrade() {
 		fi
 		nand_do_upgrade "$1"
 		;;
-	google,whirlwind-openwrt)
+	tplink,onhub)
 		export_bootdevice
 		export_partdevice CI_ROOTDEV 0
 		CI_KERNPART="kernel"
@@ -80,7 +80,7 @@ platform_do_upgrade() {
 
 platform_copy_config() {
 	case "$(board_name)" in
-	google,whirlwind-openwrt)
+	tplink,onhub)
 		emmc_copy_config
 		;;
 	esac

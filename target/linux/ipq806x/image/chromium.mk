@@ -22,7 +22,8 @@ define Build/cros-vboot
 endef
 
 # TODO review device name, should it be tplink_onhub?  google_onhub_tplink???
-define Device/tplink-onhub
+# TODO what is DEVICE_DTS?  will this pick up the correct dtb file, or should I hard code it here?
+define Device/tplink_onhub
 	DEVICE_VENDOR := TP-Link
 	DEVICE_MODEL := OnHub TGR1900 (Whirlwind)
 	SOC := qcom-ipq8064
