@@ -16,6 +16,7 @@ Summary of changes made
 
 TODOs?
  * should the model name and compatible name be more like TP-LINK OnHub TGR1900?
+ * do a diff between the qcom-ipq8064-v1.0.dtsi that's part of newer 5.10 kernels, and the one that's in the chromiumos repository
 */
 
 / {
@@ -513,6 +514,16 @@ TODOs?
 		tcsr@1a400000 {
 			status = "ok";
 			qcom,usb-ctrl-select = <TCSR_USB_SELECT_USB3_DUAL>;
+			/*
+			TODO
+			I think that the adm-*-crci-mux-sel functions are not in the mainline kernel, perhaps a chromium os
+			only patch?
+			https://groups.google.com/a/chromium.org/g/chromium-os-reviews/c/nYWrv8nrl80
+
+			Commenting these out for now, since the old v3 didn't use them either.  Perhaps if the usb port doesn't
+			work right, then we can come back to it?
+			*/
+			/*
 			qcom,adm-a-crci-mux-sel = <(TCSR_ADM_CRCI_SEL(GSBI1, ADM_CRCI_QUP) |
 						    TCSR_ADM_CRCI_SEL(GSBI4, ADM_CRCI_QUP) |
 						    TCSR_ADM_CRCI_SEL(GSBI5, ADM_CRCI_QUP) |
@@ -523,6 +534,7 @@ TODOs?
 						    TCSR_ADM_CRCI_SEL(GSBI5, ADM_CRCI_QUP) |
 						    TCSR_ADM_CRCI_SEL(GSBI6, ADM_CRCI_QUP) |
 						    TCSR_ADM_CRCI_SEL(GSBI7, ADM_CRCI_QUP))>;
+			*/
 		};
 		phy@100f8800 {		/* USB3 port 1 HS phy */
 			status = "ok";
