@@ -13,6 +13,7 @@ Summary of changes made
  * change #include to use the v2.0 that's part of this openwrt
  * add new string to 'compatible'
  * add include of dt-bindings that were found in other files using qcom-usb-ctrl-select, switch back to v1 for main include
+ * change label of mdio0 to mdio1 because it was conflicting with arch/arm/boot/dts/qcom-ipq8064.dtsi:		mdio0: mdio@37000000 {
 
 TODOs?
  * should the model name and compatible name be more like TP-LINK OnHub TGR1900?
@@ -31,7 +32,7 @@ TODOs?
 		};
 	};
 	aliases {
-		mdio-gpio0 = &mdio0;
+		mdio-gpio0 = &mdio1;
 		spi5 = &spi5; /* flashrom requires this bus to be the lowest */
 		spi6 = &spi6;
 	};
@@ -566,7 +567,7 @@ TODOs?
 				status = "okay";
 			};
 		};
-		mdio0: mdio {
+		mdio1: mdio {
 			compatible = "virtual,mdio-gpio";
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -595,7 +596,47 @@ TODOs?
 				reg = <1>;
 			};
 		};
-		/* TODO figure out how to include NSS (network accelerator) if we can get the <$gcc> syntax figured out Maybe it needs to be done in a patch? */
+		/*
+		TODO figure out how to include NSS (network accelerator) if we can get the <$gcc> syntax figured out
+		Maybe it needs to be done in a patch?
+		*/
+		/*
+		nss0: nss@40000000 {
+			compatible = "qcom,nss0";
+			interrupts = <0 213 0x4>;
+			reg = <0x36000000 0x1000 0x39000000 0x20000>;
+			reg-names = "nphys", "vphys";
+			clocks = <&gcc NSS_CORE_CLK>, <&gcc NSSTCM_CLK_SRC>, <&gcc NSSTCM_CLK>;
+			clock-names = "nss_core_clk", "nss_tcm_src", "nss_tcm_clk";
+			resets = <&gcc UBI32_CORE1_CLKRST_CLAMP_RESET>,
+				 <&gcc UBI32_CORE1_CLAMP_RESET>,
+				 <&gcc UBI32_CORE1_AHB_RESET>,
+				 <&gcc UBI32_CORE1_AXI_RESET>;
+			reset-names = "clkrst_clamp", "clamp", "ahb", "axi";
+			qcom,id = <0>;
+			qcom,num_irq = <1>;
+			qcom,rst_addr = <0x40000000>;
+			qcom,load_addr = <0x40000000>;
+			qcom,turbo_frequency = <1>;
+			qcom,ipv4_enabled = <1>;
+			qcom,ipv6_enabled = <1>;
+			qcom,l2switch_enabled = <1>;
+			qcom,crypto_enabled = <0>;
+			qcom,ipsec_enabled = <0>;
+			qcom,wlan_enabled = <0>;
+			qcom,tun6rd_enabled = <1>;
+			qcom,tunipip6_enabled = <1>;
+			qcom,shaping_enabled = <1>;
+			qcom,gmac0_enabled = <1>;
+			qcom,gmac1_enabled = <1>;
+			qcom,gmac2_enabled = <1>;
+			qcom,gmac3_enabled = <1>;
+		};
+		*/
+		nss-gmac-common {
+			reg = <0x03000000 0x0000FFFF 0x1bb00000 0x0000FFFF 0x00900000 0x00004000>;
+			reg-names = "nss_reg_base" , "qsgmii_reg_base", "clk_ctl_base";
+		};
 		gmac0: ethernet@37000000 {
 			device_type = "network";
 			compatible = "qcom,nss-gmac0";
@@ -611,7 +652,7 @@ TODOs?
 			qcom,irq = <252>;
 			qcom,socver = <1>;
 			local-mac-address = [000000000000];
-			mdiobus = <&mdio0>;
+			mdiobus = <&mdio1>;
 		};
 		gmac2: ethernet@37400000 {
 			device_type = "network";
@@ -628,7 +669,7 @@ TODOs?
 			qcom,irq = <258>;
 			qcom,socver = <1>;
 			local-mac-address = [000000000000];
-			mdiobus = <&mdio0>;
+			mdiobus = <&mdio1>;
 		};
 		watchdog@208a038 {
 			compatible = "qcom,kpss-wdt-ipq8064";
