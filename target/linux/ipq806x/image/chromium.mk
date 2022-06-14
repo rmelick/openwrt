@@ -35,4 +35,4 @@ define Device/tplink_onhub
 	DEVICE_PACKAGES := partx-utils mkf2fs e2fsprogs \
 			   kmod-fs-ext4 kmod-fs-f2fs kmod-google-firmware
 endef
-TARGET_DEVICES += tplink-onhub
+TARGET_DEVICES += tplink_onhub
