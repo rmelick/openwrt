@@ -14,6 +14,8 @@ Summary of changes made
  * add new string to 'compatible'
  * add include of dt-bindings that were found in other files using qcom-usb-ctrl-select, switch back to v1 for main include
  * change label of mdio0 to mdio1 because it was conflicting with arch/arm/boot/dts/qcom-ipq8064.dtsi:		mdio0: mdio@37000000 {
+ * set #address-cells = <1>; #size-cells = <0>; on spi5 and spi6
+
 
 TODOs?
  * should the model name and compatible name be more like TP-LINK OnHub TGR1900?
@@ -292,6 +294,8 @@ TODOs?
 			qcom,mode = <GSBI_PROT_SPI>;
 			status = "ok";
 			spi5: spi@1a280000 {
+				#address-cells = <1>;
+				#size-cells = <0>;
 				status = "ok";
 				spi-max-frequency = <50000000>;
 				pinctrl-0 = <&spi_pins>;
@@ -311,6 +315,8 @@ TODOs?
 			qcom,mode = <GSBI_PROT_SPI>;
 			status = "ok";
 			spi6: spi@16580000 {
+				#address-cells = <1>;
+				#size-cells = <0>;
 				status = "ok";
 				spi-max-frequency = <25000000>;
 				pinctrl-0 = <&spi6_pins>;
@@ -452,7 +458,7 @@ TODOs?
 				device_type = "pci";
 				ath10k@0,0 {
 					reg = <0 0 0 0 0>;
-					device_type = "pci";
+					/*device_type = "pci";*/
 					qcom,ath10k-calibration-data = [00];
 					qcom,ath10k-sa-gpio = <12 13 14 0>;
 					qcom,ath10k-sa-gpio-func = <5 5 5 0>;
@@ -475,7 +481,7 @@ TODOs?
 				device_type = "pci";
 				ath10k@0,0 {
 					reg = <0 0 0 0 0>;
-					device_type = "pci";
+					/* device_type = "pci"; */
 					qcom,ath10k-calibration-data = [00];
 					qcom,ath10k-sa-gpio = <12 13 14 0>;
 					qcom,ath10k-sa-gpio-func = <5 5 5 0>;
@@ -498,7 +504,7 @@ TODOs?
 				device_type = "pci";
 				ath10k@0,0 {
 					reg = <0 0 0 0 0>;
-					device_type = "pci";
+					/*device_type = "pci";*/
 					qcom,ath10k-calibration-data = [00];
 				};
 			};
