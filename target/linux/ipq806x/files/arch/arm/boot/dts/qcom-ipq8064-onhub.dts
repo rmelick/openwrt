@@ -290,7 +290,7 @@ TODOs?
 				clock-frequency = <100000>;
 				pinctrl-0 = <&i2c1_pins>;
 				pinctrl-names = "default";
-				trusted-platform-module: trusted-platform-module@20 {
+				trusted-platform-module@20 {
 					compatible = "infineon,slb9645tt";
 					reg = <0x20>;
 					powered-while-suspended;
