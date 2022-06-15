@@ -15,6 +15,17 @@ Summary of changes made
  * add include of dt-bindings that were found in other files using qcom-usb-ctrl-select, switch back to v1 for main include
  * change label of mdio0 to mdio1 because it was conflicting with arch/arm/boot/dts/qcom-ipq8064.dtsi:		mdio0: mdio@37000000 {
  * set #address-cells = <1>; #size-cells = <0>; on spi5 and spi6
+ * add @20 to fix
+  qcom-ipq8064-onhub.dts:273.29-277.7: Warning (i2c_bus_reg): /soc/gsbi@12440000/i2c@12460000/trusted-platform-module: I2C bus unit address format error, expected "20"
+  https://patchwork.kernel.org/project/linux-arm-kernel/patch/20180913181245.25484-13-robh@kernel.org/
+ * fix dma references (shouldn't include third reference, but can't find the patch that led me to that)
+ qcom-ipq8064-onhub.dts:304.5-305.22: Warning (dmas_property): /soc/gsbi@1a200000/spi@1a280000:dmas: cell 2 is not a phandle reference
+ * add compatible = "qcom,ath10k"; to the ath10k pci devices
+ remove properties  qcom,ath10k-sa-gpio and qcom,ath10k-sa-gpio-func since they threw warnings and weren't mentioned in ath10k driver file
+ /home/debian/openwrt/build_dir/target-arm_cortex-a9+neon-fp16_musl_eabi/linux-ipq806x_chromium/linux-5.10.120/arch/arm/boot/dts/qcom-ipq8064-onhub.dts:463.6-41: Warning (gpios_property): /soc/pci@1b500000/pcie@0/ath10k@0,0:qcom,ath10k-sa-gpio: cell 0 is not a phandle reference
+/home/debian/openwrt/build_dir/target-arm_cortex-a9+neon-fp16_musl_eabi/linux-ipq806x_chromium/linux-5.10.120/arch/arm/boot/dts/qcom-ipq8064-onhub.dts:459.16-465.7: Warning (gpios_property): /soc/pci@1b500000/pcie@0/ath10k@0,0: Missing property '#gpio-cells' in node /soc/qfprom@700000/speedbin@0c0 or bad phandle (referred from qcom,ath10k-sa-gpio[0])
+ https://elixir.bootlin.com/linux/latest/source/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.txt
+* add 'chosen' block copied from google wifi dts
 
 
 TODOs?
@@ -25,6 +36,15 @@ TODOs?
 / {
 	model = "Qualcomm IPQ8064/AP148";
 	compatible = "tplink,onhub", "google,whirlwind-sp5", "qcom,ipq8064";
+
+	chosen {
+		/*
+		 * rootwait: in case we're booting from slow/async USB storage.
+		 */
+		bootargs-append = " rootwait";
+		stdout-path = &blsp1_uart1;
+	};
+
 	reserved-memory {
 		#address-cells = <1>;
 		#size-cells = <1>;
@@ -270,7 +290,7 @@ TODOs?
 				clock-frequency = <100000>;
 				pinctrl-0 = <&i2c1_pins>;
 				pinctrl-names = "default";
-				trusted-platform-module {
+				trusted-platform-module: trusted-platform-module@20 {
 					compatible = "infineon,slb9645tt";
 					reg = <0x20>;
 					powered-while-suspended;
@@ -301,8 +321,8 @@ TODOs?
 				pinctrl-0 = <&spi_pins>;
 				pinctrl-names = "default";
 				cs-gpios = <&qcom_pinmux 20 0>;
-				dmas = <&adm_dma 6 9>,
-					<&adm_dma 5 10>;
+				dmas = <&adm_dma 6>,
+					<&adm_dma 5>;
 				dma-names = "rx", "tx";
 				spidev@0 {
 					compatible = "spidev";
@@ -322,8 +342,8 @@ TODOs?
 				pinctrl-0 = <&spi6_pins>;
 				pinctrl-names = "default";
 				cs-gpios = <&qcom_pinmux 57 0>;
-				dmas = <&adm_dma 8 0xb>,
-					<&adm_dma 7 0x14>;
+				dmas = <&adm_dma 8>,
+					<&adm_dma 7>;
 				dma-names = "rx", "tx";
 				spidev@0 {
 					compatible = "spidev";
@@ -457,11 +477,14 @@ TODOs?
 				#address-cells = <3>;
 				device_type = "pci";
 				ath10k@0,0 {
+		            compatible = "qcom,ath10k";
 					reg = <0 0 0 0 0>;
 					/*device_type = "pci";*/
 					qcom,ath10k-calibration-data = [00];
+					/*
 					qcom,ath10k-sa-gpio = <12 13 14 0>;
 					qcom,ath10k-sa-gpio-func = <5 5 5 0>;
+					*/
 				};
 			};
 		};
@@ -480,11 +503,14 @@ TODOs?
 				#address-cells = <3>;
 				device_type = "pci";
 				ath10k@0,0 {
+		            compatible = "qcom,ath10k";
 					reg = <0 0 0 0 0>;
 					/* device_type = "pci"; */
 					qcom,ath10k-calibration-data = [00];
+					/*
 					qcom,ath10k-sa-gpio = <12 13 14 0>;
 					qcom,ath10k-sa-gpio-func = <5 5 5 0>;
+					*/
 				};
 			};
 		};
