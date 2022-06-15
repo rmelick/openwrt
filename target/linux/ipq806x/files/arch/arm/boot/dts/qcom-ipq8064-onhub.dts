@@ -42,7 +42,9 @@ TODOs?
 		 * rootwait: in case we're booting from slow/async USB storage.
 		 */
 		bootargs-append = " rootwait";
+		/* not sure about wetting the stdout path
 		stdout-path = &blsp1_uart1;
+		 */
 	};
 
 	reserved-memory {
