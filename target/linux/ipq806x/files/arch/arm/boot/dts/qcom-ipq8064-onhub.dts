@@ -4,6 +4,15 @@
 #include <dt-bindings/soc/qcom,tcsr.h>
 
 /*
+This is supposed to the file with minimal tweaks, that references the chromium dtsi chain (instead of the built into the kernel)
+
+Things I tried outside of this file:
+ *
+ Build with the qualcom ethernet switch drivers enabled?
+ https://cateee.net/lkddb/web-lkddb/NET_DSA_QCA8K.html
+ CONFIG_NET_DSA_QCA8K=y
+
+
 This is my version of the tweaked dts file for the Tplink Onhub, I started from
 https://chromium.googlesource.com/chromiumos/third_party/kernel/+/chromeos-3.14/arch/arm/boot/dts/qcom-ipq8064-whirlwind-sp5.dts
 
